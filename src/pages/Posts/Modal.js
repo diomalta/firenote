@@ -44,12 +44,18 @@ export class ModalAnotation extends React.Component {
       >
         <div class="modal" id="new-Anotation">
           <form class="modal-content">
-            <input type="text" name="titlePost" placeholder="Título da anotação" onChange={handleChange} value={post.title}/>
+            <input 
+              type="text" 
+              name="titlePost" 
+              placeholder="Título da anotação" 
+              onChange={handleChange} 
+              value={post ? post.title : null}
+            />
 
             <ReactMde
               onChange={this.handleValueChange}
               onTabChange={this.handleTabChange}
-              value={post.content}
+              value={post ? post.content : null}
               generateMarkdownPreview={markdown =>
                 Promise.resolve(this.converter.makeHtml(markdown))
               }

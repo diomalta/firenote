@@ -15,7 +15,7 @@ export class Categories extends Component {
 
       name: null,
       email: null,
-      categories: null,
+      categories: [],
 
       titleCategory: null,
       contentCategory: null,
@@ -82,7 +82,8 @@ export class Categories extends Component {
     e.preventDefault();
 
     const { titleSubCategory, contentSubCategory, categorySubCategory, email, categories } = this.state;
-
+    console.log(titleSubCategory, contentSubCategory, categorySubCategory, email, categories);
+    
     const response = await API.post('/subcategory/store', {
       email,
       title: titleSubCategory, 

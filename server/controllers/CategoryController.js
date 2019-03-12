@@ -14,15 +14,16 @@ module.exports = {
         return res.status(200).json({ message: 'Usuário não encontrado'});
       }
       
+      const _id = new ObjectId();
       user.categories.push({
         ...req.body,
-        _id: new ObjectId(),
+        _id,
       });
 
       await user.save();
 
       return res.status(200).json({ 
-        category: { ...req.body },
+        category: { ...req.body, _id },
         message: 'Categoria criada com sucesso'
       });
     } catch (err) {
