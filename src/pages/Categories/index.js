@@ -82,7 +82,6 @@ export class Categories extends Component {
     e.preventDefault();
 
     const { titleSubCategory, contentSubCategory, categorySubCategory, email, categories } = this.state;
-    console.log(titleSubCategory, contentSubCategory, categorySubCategory, email, categories);
     
     const response = await API.post('/subcategory/store', {
       email,

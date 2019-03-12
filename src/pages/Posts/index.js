@@ -11,9 +11,8 @@ export default class Posts extends Component {
 
     this.state = {
       modalIsOpen: false,
-      mdeValue: null,
       subcategory: null,
-      posts: null,
+      posts: [],
       _id: null
     };
   }
@@ -40,17 +39,24 @@ export default class Posts extends Component {
   onSubmit = async (e) => {
     e.preventDefault();
 
-    const { titlePost, contentPost, _id } = this.state;
+    const { titlePost, contentPost, _id, posts } = this.state;
     
     const response = await API.post('/anotation/store', {
       _id,
       title: titlePost, 
       content: contentPost,
     });
+
+    if (posts) {
+      this.setState({ 
+        posts: [ ...this.state.posts, response.data.anotation ]
+      });
+    } else {
+      this.setState({ 
+        posts: [ response.data.anotation ]
+      });
+    }
     
-    this.setState({ 
-      posts: [ ...this.state.posts, response.data.anotation ]
-    });
     this.controlModal();
   };
 
