@@ -6,11 +6,16 @@ const SubCategoryController = require("./controllers/SubCategoryController");
 const AnotationController = require("./controllers/AnotationController");
 const UserController = require("./controllers/UserController");
 
+const authMiddleware = require('./middlewares/auth');
+
 const routes = express.Router();
 
 // AUTHENTICAT
 routes.post("/api/signin", AuthController.signin);
 routes.post("/api/signup", AuthController.signup);
+
+// AUTH ROUTES
+routes.use(authMiddleware);
 
 // USERS  
 routes.get("/api/user/show/:_id", UserController.show);

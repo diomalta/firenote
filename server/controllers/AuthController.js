@@ -31,13 +31,14 @@ module.exports = {
       if (!user) {
         return res.status(200).json({ message: 'Email não cadastrado'});
       }
-
+      
       if (!await bcrypt.compare(password, user.password)) {
         return res.status(200).json({ message: 'Senha incorreta' });
       }
 
       return res.status(200).json({ 
         user,
+        token: user.generateToken(),
         message: 'Login efetuado com sucesso'
       });
     } catch (err) {

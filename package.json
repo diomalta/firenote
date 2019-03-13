@@ -9,6 +9,7 @@
     "concurrently": "^4.1.0",
     "cors": "^2.8.4",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.0",
     "mongoose": "^5.3.8",
     "node-sass": "^4.11.0",
     "prop-types": "^15.6.1",
