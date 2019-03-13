@@ -33,7 +33,11 @@ const Register = Loadable({
 class App extends Component {
   render() {
     const checkAuth = () => {
-      if (!localStorage.getItem('@email') || !localStorage.getItem('@id') ) {
+      if (
+        !localStorage.getItem('@email') 
+        || !localStorage.getItem('@id')
+        || !localStorage.getItem('@token') 
+      ) {
         return false;
       }
       return true;

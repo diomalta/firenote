@@ -27,12 +27,13 @@ export default class Login extends Component {
     const { email, password } = this.state;
 
     const response = await API.post('/signin', { email, password });
-    const { user } = response.data;
+    const { user, token } = response.data;
     
     if (user) {
       localStorage.setItem('@id', user._id);          
       localStorage.setItem('@email', user.email);
       localStorage.setItem('@name', user.name);
+      localStorage.setItem('@token', token);
 
       this.setState({ redirect: true });
     } else {
