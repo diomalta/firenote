@@ -66,19 +66,19 @@ class Posts extends Component {
         <Header>
           <Title color={subcategory.color}>
             <span>{subcategory.sigla}</span>
-            <i style={{ marginRight: '10px' }} class="fas fa-chevron-right"></i>
+            <i style={{ marginRight: '10px' }} className="fas fa-chevron-right"></i>
             {subcategory.title}
           </Title>
           <Content>
-            <button onClick={this.controlModal}><i class="fas fa-pencil-alt"></i>Editar</button>
-            <a href={`/#/anotations/${subcategory._id}`}><i class="fas fa-chevron-left"></i>Voltar</a>
+            <button onClick={this.controlModal}><i className="fas fa-pencil-alt"></i>Editar</button>
+            <a href={`/#/anotations/${subcategory._id}`}><i className="fas fa-chevron-left"></i>Voltar</a>
           </Content>
         </Header>
 
         <Wrapper>
           <Box>
             <Title>
-              <i style={{ marginRight: '10px' }} class="fas fa-pen-square"></i>
+              <i style={{ marginRight: '10px' }} className="fas fa-pen-square"></i>
               {post.title}
             </Title>
             <Anotation>

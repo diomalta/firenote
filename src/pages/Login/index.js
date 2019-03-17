@@ -52,9 +52,9 @@ export default class Login extends Component {
   render() {
     if (this.state.redirect) return <Redirect to="/categories" />;
     return (
-      <div class="auth-wrapper">
-        <form method="POST" action="" class="form-signin">
-          <i style={{ fontSize: "42px", color: '#FF421D' }} class="fas fa-fire"></i>
+      <div className="auth-wrapper">
+        <form method="POST" action="" className="form-signin">
+          <i style={{ fontSize: "42px", color: '#FF421D' }} className="fas fa-fire"></i>
           <h1>FireNote</h1>
       
           <input 

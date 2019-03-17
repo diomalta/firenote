@@ -42,8 +42,8 @@ export class ModalAnotation extends React.Component {
         style={customStyles}
         contentLabel="Modal Anotation"
       >
-        <div class="modal" id="new-Anotation">
-          <form class="modal-content">
+        <div className="modal" id="new-Anotation">
+          <form className="modal-content">
             <input 
               type="text" 
               name="titlePost" 

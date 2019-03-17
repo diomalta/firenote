@@ -69,8 +69,23 @@ export const Category = styled.div`
   width: 100%;
 
   h3 {
+    display: flex;
+    align-items: center; 
+
     font-size: 22px;
     font-weight: 600;
+
+    i {
+      margin-left: 10px;
+      font-size: 12px;
+      font-weight: normal;
+      color: rgb(139, 131, 152);
+      cursor: pointer;
+
+      &:hover {
+        color: rgb(189, 189, 152);
+      }
+    }
 
     small {
       margin-left: 25px;

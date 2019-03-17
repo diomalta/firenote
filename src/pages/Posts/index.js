@@ -91,8 +91,8 @@ export default class Posts extends Component {
             { title }
           </Title>
           <Content>
-            <button onClick={this.controlModal}><i class="fas fa-plus-circle"></i>Criar anotação</button>
-            <a href="/#/categories"><i class="fas fa-chevron-left"></i>Voltar</a>
+            <button onClick={this.controlModal}><i className="fas fa-plus-circle"></i>Criar anotação</button>
+            <a href="/#/categories"><i className="fas fa-chevron-left"></i>Voltar</a>
           </Content>
         </Header>
 
@@ -104,7 +104,7 @@ export default class Posts extends Component {
                 <Box>
                   <div>
                     <span>
-                      <h1><i class="fas fa-book"></i></h1>
+                      <h1><i className="fas fa-book"></i></h1>
                     </span>
                     <div>
                       <a href={`/#/subcategories/${subcategory._id}/anotation/${anotation._id}`}>{anotation.title}</a>

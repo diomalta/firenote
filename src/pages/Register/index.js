@@ -51,9 +51,9 @@ export default class Register extends Component {
     if (this.state.redirect) return <Redirect to="/categories" />;
 
     return (
-      <div class="auth-wrapper">
-        <form class="form-signin">
-          <i style={{ fontSize: "42px", color: '#FF421D' }} class="fas fa-fire"></i>
+      <div className="auth-wrapper">
+        <form className="form-signin">
+          <i style={{ fontSize: "42px", color: '#FF421D' }} className="fas fa-fire"></i>
           <h1>Cadastro</h1>
 
           <input 

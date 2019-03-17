@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const User = require('../models/User');
+const SubCategory = require('../models/SubCategory');
 const ObjectId = mongoose.Types.ObjectId;
 
 module.exports = {
@@ -28,6 +29,35 @@ module.exports = {
       });
     } catch (err) {
       return next(err);
+    }
+  },
+  async update(req, res, next) {
+    try {
+      const { _id, title, content, email } = req.body;
+      let user = await User.findOne({ email });
+
+      if (!user) {
+        return res.json({ message: 'Usuário não encontrado' });
+      }
+      
+      const changeCategories = await Promise.all(user.categories.map(async category => {        
+        if (!(_id === String (category._id))) return category;
+        const subcategories = await SubCategory.find({ categoryId: category._id });
+        
+        category.title = title || category.title;
+        category.content = content || category.content;
+        category.subCategories = subcategories.length < 1 ? null : subcategories;
+
+        return category;
+      }));
+      
+      user.categories = changeCategories;
+      
+      user.save();
+
+      return res.json({ categories: changeCategories });
+    } catch (err) {
+      return next(err);      
     }
   },
 };

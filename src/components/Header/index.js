@@ -10,7 +10,7 @@ const Header = () => (
       Anotações
     </Title>
     <Logout href="/#/signin" onClick={handleLogout}>
-      <i class="fas fa-power-off"></i>
+      <i className="fas fa-power-off"></i>
       Sair
     </Logout>
   </Container>

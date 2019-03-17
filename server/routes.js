@@ -22,6 +22,7 @@ routes.get("/api/user/show/:_id", UserController.show);
 
 // CATEGORIES
 routes.post("/api/category/store", CategoryController.store);
+routes.put("/api/category/update", CategoryController.update);
 
 // SUBCATEGORIES
 routes.post("/api/subcategory/store", SubCategoryController.store);

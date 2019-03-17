@@ -2,20 +2,33 @@ import React from 'react';
 
 import Modal from 'react-modal';
 
-export const ModalCategory = ({ modalIsOpen, controlModal, handleChange, onSubmitCategory }) => (
+export const ModalCategory = ({ modalIsOpen, controlModal, handleChange, onSubmitCategory, data }) => (
   <Modal
     isOpen={modalIsOpen}
     onRequestClose={controlModal}
     style={customStyles}
     contentLabel="Modal Category"
+    ariaHideApp={false}
   >
-    <div class="modal" id="new-category">
-      <form class="modal-content">
-        <input type="text" name="titleCategory" placeholder="Título da categoria" onChange={ handleChange } />
-        <input type="text" name="colorCategory" placeholder="Escolhar uma cor da categoria" onChange={ handleChange } />
+    <div className="modal" id="new-category">
+      <form className="modal-content">
+        <input 
+          type="text" 
+          name="titleCategory" 
+          placeholder="Título da categoria" 
+          value={ data ? data.title : null }
+          onChange={ handleChange }
+        />
 
-        <div class="content-container">
-          <textarea name="contentCategory" class="mde" placeholder="Conteúdo dessa categoria" onChange={ handleChange } ></textarea>
+        <div className="content-container">
+          <textarea 
+            name="contentCategory" 
+            className="mde" 
+            placeholder="Conteúdo dessa categoria" 
+            value={ data ? data.content : null }
+            onChange={ handleChange } 
+          >
+          </textarea>
         </div>
 
         <button onClick={onSubmitCategory}>SALVAR CATEGORIA</button>
@@ -32,22 +45,30 @@ export const ModalCategorySub = ({ modalIsOpenSub, controlModalSub, categories, 
     onRequestClose={controlModalSub}
     style={customStyles}
     contentLabel="Modal Category"
+    ariaHideApp={false}
   >
-    <div class="modal" id="new-category">
-      <form class="modal-content">
+    <div className="modal" id="new-category">
+      <form className="modal-content">
         <input type="text" name="titleSubCategory" placeholder="Título da Sub-categoria" onChange={ handleChange }/>
 
         <select name="categorySubCategory" onChange={ handleChange }>
           <option>Selecione um categoria</option>
           {categories
-          ? categories.map(category => {
-            return <option value={ category._id }>{ category.title }</option>;
+          ? categories.map((category, index )=> {
+            return <option key={index} value={ category._id }>{ category.title }</option>;
           })
           : <option></option>}
         </select>
 
-        <div class="content-container">
-          <textarea name="contentSubCategory" class="mde" placeholder="Conteúdo dessa categoria" onChange={ handleChange } ></textarea>
+        <input 
+          type="text" 
+          name="colorCategory" 
+          placeholder="Escolhar uma cor da categoria" 
+          onChange={ handleChange } 
+        />
+
+        <div className="content-container">
+          <textarea name="contentSubCategory" className="mde" placeholder="Conteúdo dessa categoria" onChange={ handleChange } ></textarea>
         </div>
 
         <button onClick={ onSubmitSubCategory }>SALVAR SUBCATEGORIA</button>

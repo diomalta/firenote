@@ -17,13 +17,16 @@ export class Categories extends Component {
       email: null,
       categories: [],
 
+      idCategory: null,
       titleCategory: null,
       contentCategory: null,
-      colorCategory: null,
-
+      
       categorySubCategory: null,
       titleSubCategory: null,
       contentSubCategory: null,
+      colorSubCategory: null,
+
+      editCategory: null,
     };
   }
 
@@ -64,17 +67,27 @@ export class Categories extends Component {
 
   onSubmitCategory = async (e) => {
     e.preventDefault();
+    const { titleCategory, contentCategory, email, idCategory } = this.state;
 
-    const { titleCategory, contentCategory, email, colorCategory } = this.state;
+    let response;
+    if (!idCategory) {    
+       response = await API.post('/category/store', {
+        email,
+        title: titleCategory, 
+        content: contentCategory,
+      });
 
-    const response = await API.post('/category/store', {
-      email,
-      title: titleCategory, 
-      content: contentCategory,
-      color: colorCategory
-    });
-    
     this.setState({ categories: [ ...this.state.categories, response.data.category ]});
+    } else {
+      response = await API.put('/category/update', {
+        _id: idCategory,
+        title: titleCategory, 
+        content: contentCategory,
+        email,
+      });
+    }
+    
+    this.setState({ categories: response.data.categories });
     this.controlModal();
   };
 
@@ -107,37 +120,48 @@ export class Categories extends Component {
     this.controlModalSub();
   };
 
+  handleEdit = (event, category) => {
+    event.preventDefault();
+    this.setState({ 
+      idCategory: category._id,
+      titleCategory: category.title,
+      contentCategory: category.content,
+    });
+    this.controlModal();
+  }
+
   render () {
-    const { modalIsOpen, modalIsOpenSub, name, categories } = this.state;
+    const { modalIsOpen, modalIsOpenSub, name, categories, idCategory, titleCategory, contentCategory, } = this.state;
 
     return (
       <Container>
         <Header>
           <Title>Bem vindo, <span>{ name } :D</span></Title>
           <Content>
-            <button onClick={this.controlModal}><i class="fas fa-address-book"></i>Categoria</button>
-            <button onClick={this.controlModalSub}><i class="far fa-address-book"></i>SubCategoria</button>
+            <button onClick={this.controlModal}><i className="fas fa-address-book"></i>Categoria</button>
+            <button onClick={this.controlModalSub}><i className="far fa-address-book"></i>SubCategoria</button>
           </Content>
         </Header>
         {
           categories 
-          ? categories.map(category => {
+          ? categories.map((category, id) => {
             return (
-              <Wrapper>
-                <Category>
+              <Wrapper key={id}>
+                <Category >
                   <h3>
                     { category.title }
+                    <i onClick={(e) => this.handleEdit(e, category)} className="fas fa-edit"></i>
+                    {/* <i className="fas fa-times-circle"></i> */}
                     <small>
                       { category.content }                      
                     </small>
                   </h3>
                 </Category>
-
                 {
                   category.subCategories
-                  ? category.subCategories.map(sub => {
+                  ? category.subCategories.map((sub, id)=> {
                     return (
-                      <Box color={ category.color }>
+                      <Box key={id} color={ sub.color }>
                         <div>
                           <span>
                             <h1>{ sub.sigla }</h1>
@@ -162,7 +186,11 @@ export class Categories extends Component {
           modalIsOpen, 
           controlModal: this.controlModal,
           handleChange: this.handleChange,
-          onSubmitCategory: this.onSubmitCategory
+          onSubmitCategory: this.onSubmitCategory,
+          data: {
+            title: titleCategory,
+            content: contentCategory,
+          }
         })}
 
         {ModalCategorySub({
