@@ -1,6 +1,8 @@
-import Anotation from '../pages/Anotation';
-import Categories from '../pages/Categories';
-import Posts from '../pages/Posts';
+import React from 'react';
+
+const Anotation = React.lazy(() => import('../pages/Anotation'));
+const Categories = React.lazy(() => import('../pages/Categories'));
+const Posts = React.lazy(() => import('../pages/Posts'));
 
 const routes = [
   { path: '/categories', exact: true, component: Categories },

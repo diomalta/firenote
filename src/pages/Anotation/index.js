@@ -6,7 +6,7 @@ import { Container, Header, Title, Content, Wrapper, Box, Anotation } from './st
 
 import API from '../../services/api';
 
-export default class Posts extends Component {
+class Posts extends Component {
   constructor(props) {
     super(props);
 
@@ -34,6 +34,7 @@ export default class Posts extends Component {
           subcategory: response.data.subcategory 
         });
       }
+      return true;
     })
   }
 
@@ -99,3 +100,4 @@ export default class Posts extends Component {
   }
 }
 
+export default Posts;

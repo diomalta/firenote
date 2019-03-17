@@ -10,7 +10,6 @@ import './styles/dracula.css';
 import './styles/core.css';
 import "react-mde/lib/styles/css/react-mde-all.css";
 
-
 const loading = () => <div className="loading">Loading...</div>;
 
 // Containers
@@ -63,13 +62,11 @@ class App extends Component {
       <Fragment>
         <Provider>
           <HashRouter>
-              <Switch>
-                {/* <Route exact path="/signin" name="Login Page" component={Login} />
-                <Route exact path="/signup" name="Register Page" component={Register} /> */}
-                <AuthRoute path="/signin" name="Home" component={Login} />
-                <AuthRoute path="/signup" name="Home" component={Register} />
-                <PrivateRoute path="/" name="Home" component={DefaultLayout} />
-              </Switch>
+            <Switch>
+              <AuthRoute path="/signin" name="Home" component={Login} />
+              <AuthRoute path="/signup" name="Home" component={Register} />
+              <PrivateRoute path="/" name="Home" component={DefaultLayout} />
+            </Switch>
           </HashRouter>
         </Provider>
         <GlobalStyle />

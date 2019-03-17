@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense, lazy } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import { Container, Content } from '../../styles/components';
@@ -6,40 +6,41 @@ import { Container, Content } from '../../styles/components';
 // routes config
 import routes from '../../routes';
 
-import Header from '../../components/Header';
-import Sidebar from '../../components/Sidebar';
+const Header = lazy(() => import("../../components/Header"));
+const Sidebar = lazy(() => import("../../components/Sidebar"));
+
 
 class DefaultLayout extends Component {
-
-  loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
-
-  signOut(e) {
-    e.preventDefault()
-    this.props.history.push('/login')
-  }
-
   render() {
+    const loading = <div className="loading">Loading...</div>;
+
     return (
       <Container>
-        <Sidebar />
+        <Suspense fallback={loading}>
+          <Sidebar />
+        </Suspense>
 
         <Content>
+        <Suspense fallback={loading}>
           <Header />
-          <Switch>
-            {routes.map((route, idx) => {                
-              return route.component ? (
-                <Route
-                  key={idx}
-                  path={route.path}
-                  exact={route.exact}
-                  name={route.name}
-                  render={props => (
-                    <route.component {...props} />
-                  )} />
-              ) : (null);
-            })}
-            <Redirect from="/" to="/categories" />
-          </Switch> 
+        </Suspense>
+          <Suspense fallback={loading}>
+            <Switch>
+              {routes.map((route, idx) => {                
+                return route.component ? (
+                  <Route
+                    key={idx}
+                    path={route.path}
+                    exact={route.exact}
+                    name={route.name}
+                    render={props => (
+                      <route.component {...props} />
+                    )} />
+                ) : (null);
+              })}
+              <Redirect from="/" to="/categories" />
+            </Switch> 
+          </Suspense>
         </Content>
       </Container>
     );

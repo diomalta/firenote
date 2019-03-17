@@ -24,3 +24,20 @@ export const Title = styled.h1`
   font-size: 24px;
   color: #fff;
 `;
+
+
+export const Logout = styled.a`
+  display: block;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  margin-left: 20px;
+  font-size: 14px;
+  color: rgb(139,131,152);
+  text-decoration: none;
+
+  i {
+    margin-right: 7px;
+  }  
+`;
