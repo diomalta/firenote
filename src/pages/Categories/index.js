@@ -27,6 +27,7 @@ export class Categories extends Component {
       colorSubCategory: null,
 
       editCategory: null,
+      pickerVisible: false,
     };
   }
 
@@ -65,6 +66,9 @@ export class Categories extends Component {
     })
   }
 
+  handleColorChange = ({ hex }) => this.setState({ colorSubCategory: hex });
+  onTogglePicker = () => this.setState({ pickerVisible: !this.state.pickerVisible })
+
   onSubmitCategory = async (e) => {
     e.preventDefault();
     const { titleCategory, contentCategory, email, idCategory } = this.state;
@@ -94,14 +98,15 @@ export class Categories extends Component {
   onSubmitSubCategory = async (e) => {
     e.preventDefault();
 
-    const { titleSubCategory, contentSubCategory, categorySubCategory, email, categories } = this.state;
+    const { titleSubCategory, contentSubCategory, categorySubCategory, email, categories, colorSubCategory } = this.state;
     
     const response = await API.post('/subcategory/store', {
       email,
       title: titleSubCategory, 
       content: contentSubCategory,
       sigla: titleSubCategory.charAt(0),
-      categoryId: categorySubCategory
+      categoryId: categorySubCategory,
+      color: colorSubCategory
     });
 
     const { subCategory } = response.data;
@@ -131,7 +136,7 @@ export class Categories extends Component {
   }
 
   render () {
-    const { modalIsOpen, modalIsOpenSub, name, categories, idCategory, titleCategory, contentCategory, } = this.state;
+    const { modalIsOpen, modalIsOpenSub, name, categories, titleCategory, contentCategory, pickerVisible, colorSubCategory } = this.state;
 
     return (
       <Container>
@@ -198,7 +203,11 @@ export class Categories extends Component {
           controlModalSub: this.controlModalSub,
           handleChange: this.handleChange,
           categories,
-          onSubmitSubCategory: this.onSubmitSubCategory
+          onSubmitSubCategory: this.onSubmitSubCategory,
+          onTogglePicker: this.onTogglePicker,
+          handleColorChange: this.handleColorChange,
+          pickerVisible,
+          ColorChange: colorSubCategory
         })}
       </Container>
     )

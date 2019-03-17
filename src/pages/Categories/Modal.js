@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { CompactPicker   } from 'react-color'
 import Modal from 'react-modal';
 
 export const ModalCategory = ({ modalIsOpen, controlModal, handleChange, onSubmitCategory, data }) => (
@@ -39,7 +39,7 @@ export const ModalCategory = ({ modalIsOpen, controlModal, handleChange, onSubmi
   </Modal>
 );
 
-export const ModalCategorySub = ({ modalIsOpenSub, controlModalSub, categories, handleChange, onSubmitSubCategory }) => (
+export const ModalCategorySub = ({ pickerVisible, modalIsOpenSub, controlModalSub, categories, handleChange, onSubmitSubCategory, onTogglePicker, handleColorChange, ColorChange }) => (
   <Modal
     isOpen={modalIsOpenSub}
     onRequestClose={controlModalSub}
@@ -60,16 +60,22 @@ export const ModalCategorySub = ({ modalIsOpenSub, controlModalSub, categories, 
           : <option></option>}
         </select>
 
-        <input 
-          type="text" 
-          name="colorCategory" 
-          placeholder="Escolhar uma cor da categoria" 
-          onChange={ handleChange } 
-        />
-
         <div className="content-container">
           <textarea name="contentSubCategory" className="mde" placeholder="Conteúdo dessa categoria" onChange={ handleChange } ></textarea>
         </div>
+        {/* eslint-disable-next-line */}
+        <a style={{ background: ColorChange || null }} onClick={ onTogglePicker }>
+          Escolha uma cor
+        </a>
+
+        { pickerVisible && (
+          <div style={{ position: 'absolute', bottom: '73px' }}>
+            <CompactPicker
+              color="#333"
+              onChangeComplete={ handleColorChange }
+            />
+          </div>
+        ) }
 
         <button onClick={ onSubmitSubCategory }>SALVAR SUBCATEGORIA</button>
         {/* eslint-disable-next-line */}
