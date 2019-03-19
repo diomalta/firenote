@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { ModalAnotation } from './Modal';
+import EditModal from './EditModal';
 import { Container, Header, Title, Content, Wrapper, Box } from './styles';
 
 import API from '../../services/api';
@@ -13,7 +14,17 @@ export default class Posts extends Component {
       modalIsOpen: false,
       subcategory: null,
       posts: [],
-      _id: null
+      _id: null,
+
+      pickerVisible: null,
+      category: null,
+      title: null,
+      content: null,
+      color: null,
+      modalIsOpenSub: null,
+
+      categories: null,
+      editCategory: null,
     };
   }
 
@@ -24,27 +35,32 @@ export default class Posts extends Component {
   }
 
   getPosts = async (_id) => {
+    const userId = localStorage.getItem('@id');
     const response = await API.get(`/subcategory/${ _id }`);
-    const { subCategory } = response.data;
+
+    const responseUser = await API.get(`/user/show/${userId}`);    const { subCategory } = response.data;
     
     this.setState({ 
+      idCategory: subCategory._id,
       title: subCategory.title, 
       color: subCategory.color, 
       sigla: subCategory.sigla, 
+      content: subCategory.content, 
       posts: subCategory.anotations,
-      subcategory: subCategory
+      subcategory: subCategory,
+      categories: responseUser.data.categories
     });
   }
 
   onSubmit = async (e) => {
     e.preventDefault();
 
-    const { titlePost, contentPost, _id, posts } = this.state;
+    const { titlePost, content, _id, posts } = this.state;
     
     const response = await API.post('/anotation/store', {
       _id,
       title: titlePost, 
-      content: contentPost,
+      content: content,
     });
 
     if (posts) {
@@ -76,19 +92,58 @@ export default class Posts extends Component {
     })
   }
 
-  setContent = (contentPost) => {
-    this.setState({ contentPost });
+  setContent = (content) => {
+    this.setState({ content });
+  }
+
+  controlModalSub = () => {
+    this.setState(prevState => ({ modalIsOpenSub: !prevState.modalIsOpenSub }));
+  }
+
+  handleColorChange = ({ hex }) => this.setState({ color: hex });
+  onTogglePicker = () => this.setState({ pickerVisible: !this.state.pickerVisible })
+
+  onSubmitCategory = async (e) => {
+    e.preventDefault();
+    const { title, content, color, idCategory } = this.state;
+
+    await API.post('/subcategory/update', {
+      _id: idCategory,
+      title: title, 
+      content: content,
+      color: color
+    });
+
+    this.controlModalSub();
+  }
+
+  handleEdit = (event) => {
+    event.preventDefault();
+    this.controlModalSub();
   }
 
   render() {
-    const { sigla, title, modalIsOpen, posts, color, subcategory } = this.state;
-
+    const { 
+      sigla, 
+      title, 
+      modalIsOpen, 
+      posts, 
+      color, 
+      subcategory,
+      modalIsOpenSub, 
+      categories, 
+      content, 
+      pickerVisible, 
+      _id 
+    } = this.state;
+    
     return (
       <Container>
         <Header>
           <Title color={ color }>
             <span>{ sigla }</span>
             { title }
+            <i onClick={this.handleEdit} className="fas fa-edit"></i>
           </Title>
           <Content>
             <button onClick={this.controlModal}><i className="fas fa-plus-circle"></i>Criar anotação</button>
@@ -123,6 +178,19 @@ export default class Posts extends Component {
           handleChange={ this.handleChange }
           setContent={this.setContent}
           onSubmit={this.onSubmit} 
+        />
+
+        <EditModal 
+          modalIsOpenSub={modalIsOpenSub}
+          controlModalSub={this.controlModalSub}
+          handleChange={this.handleChange}
+          categories={categories}
+          onSubmitSubCategory={this.onSubmitCategory}
+          onTogglePicker={this.onTogglePicker}
+          handleColorChange={this.handleColorChange}
+          pickerVisible={pickerVisible}
+          ColorChange={color}
+          data={{ _id, title, content, color }}
         />
       </Container>
     );

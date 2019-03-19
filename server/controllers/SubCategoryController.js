@@ -14,6 +14,30 @@ module.exports = {
     }
   },
 
+  async update(req, res, next) {
+    try {
+      const { _id, title, content, color } = req.body;
+      
+      const subCategory = await SubCategory.findOne({ _id });
+      if(!subCategory) {
+        return res.status(400).json({ message: 'Subcategoria não encontrada' });
+      }
+
+      subCategory.title = title;
+      subCategory.content = content;
+      subCategory.color = color;
+
+      await subCategory.save();
+
+      return res.status(200).json({ 
+        subCategory,
+        message: 'Sub categoria criada com sucesso'
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+
   async showAll(req, res, next) {
     try {
       const { _id } = req.params;

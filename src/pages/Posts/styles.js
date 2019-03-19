@@ -62,6 +62,14 @@ export const Title = styled.div`
     background-color: ${props => ( props.color || '#614DA3')};
     border-radius: 7px;
   }
+
+  i {
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: normal;
+    color: rgb(139, 131, 152);
+    cursor: pointer;
+  }
 `;
 
 export const Wrapper = styled.div`

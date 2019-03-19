@@ -26,6 +26,7 @@ routes.put("/api/category/update", CategoryController.update);
 
 // SUBCATEGORIES
 routes.post("/api/subcategory/store", SubCategoryController.store);
+routes.post("/api/subcategory/update", SubCategoryController.update);
 routes.get("/api/subcategory/:_id", SubCategoryController.showAll);
 
 // ANOTATIONS
