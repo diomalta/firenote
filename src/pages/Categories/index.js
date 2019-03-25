@@ -80,8 +80,12 @@ export class Categories extends Component {
         title: titleCategory, 
         content: contentCategory,
       });
-
-    this.setState({ categories: [ ...this.state.categories, response.data.category ]});
+      
+      this.setState({ 
+        categories: [ 
+          ...this.state.categories, response.data.category 
+        ]
+      });
     } else {
       response = await API.put('/category/update', {
         _id: idCategory,
@@ -89,9 +93,10 @@ export class Categories extends Component {
         content: contentCategory,
         email,
       });
+      
+      this.setState({ categories: response.data.categories });
     }
     
-    this.setState({ categories: response.data.categories });
     this.controlModal();
   };
 
@@ -148,7 +153,7 @@ export class Categories extends Component {
           </Content>
         </Header>
         {
-          categories 
+          categories.length > 0 
           ? categories.map((category, id) => {
             return (
               <Wrapper key={id}>
@@ -184,7 +189,7 @@ export class Categories extends Component {
           })
           : 
           <Wrapper>
-            <h2>Nenhuma categoria criada até o momemnto...</h2>
+            <h2>Nenhuma categoria criada até o momento...</h2>
           </Wrapper>
         }
         {ModalCategory({

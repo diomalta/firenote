@@ -64,7 +64,7 @@ export const ModalCategorySub = ({ pickerVisible, modalIsOpenSub, controlModalSu
           <textarea name="contentSubCategory" className="mde" placeholder="Conteúdo dessa categoria" onChange={ handleChange } ></textarea>
         </div>
         {/* eslint-disable-next-line */}
-        <a style={{ background: ColorChange || null }} onClick={ onTogglePicker }>
+        <a style={{ background: ColorChange || null, color: '#fff' }} onClick={ onTogglePicker }>
           Escolha uma cor
         </a>
 

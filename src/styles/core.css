@@ -35,6 +35,48 @@ input:focus, textarea:focus {
   outline: 0;
 }
 
+.btnMdeTabs > .mde-header > .mde-tabs > button {
+  border-radius: 2px !important;
+  margin: 0px 5px !important;
+  background-color: transparent !important;
+  border: 1px solid transparent !important;
+  cursor: pointer !important;
+  font-weight: normal !important;
+}
+
+.mde-header .mde-tabs button.selected {
+  font-weight: 600 !important;
+}
+
+.mde-header-group {
+  margin: 0 !important;
+  padding: 0px !important;
+  list-style: none !important;
+  display: -webkit-flex !important;
+  display: flex !important;
+  -webkit-flex-wrap: nowrap !important;
+  flex-wrap: nowrap !important;
+}
+
+.mde-header .mde-tabs {
+  display: -webkit-flex !important;
+  display: flex !important;
+  -webkit-flex-direction: row !important;
+  flex-direction: row !important;
+  margin-left: 10px;
+}
+
+.mde-header ul.mde-header-group li.mde-header-item button {
+  text-align: left !important;
+  cursor: pointer !important;
+  height: 0px !important;
+  padding: 4px !important;
+  margin: 0 !important;
+  border: none !important;
+  background: none !important;
+  color: #242729 !important;
+}
+
 .auth-wrapper {
   height: 100%;
   display: flex;

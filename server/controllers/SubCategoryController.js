@@ -19,6 +19,7 @@ module.exports = {
       const { _id, title, content, color } = req.body;
       
       const subCategory = await SubCategory.findOne({ _id });
+      
       if(!subCategory) {
         return res.status(400).json({ message: 'Subcategoria não encontrada' });
       }
@@ -48,7 +49,7 @@ module.exports = {
         return res.status(200).json({ message: 'Sub categoria não encontrada' });
       }
       
-      if (subCategory.anotations.length < 1) subCategory.anotations = null;
+      if (subCategory.anotations.length <= 0) subCategory.anotations = null;
 
       return res.status(200).json({ 
         subCategory,

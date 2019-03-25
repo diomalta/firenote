@@ -23,7 +23,7 @@ export const Content = styled.div`
     border-image: initial;
     text-decoration: none;
     transition: all 0.2s ease 0s;
-    padding: 0px 25px;
+    padding: 0px 20px;
     background: #614DA3;
     margin-left: 10px;
 
@@ -88,7 +88,7 @@ export const Category = styled.div`
     }
 
     small {
-      margin-left: 25px;
+      margin-left: 20px;
       font-size: 14px;
       font-weight: normal;
       color: rgb(139, 131, 152);

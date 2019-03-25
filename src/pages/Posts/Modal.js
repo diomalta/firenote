@@ -41,6 +41,7 @@ export class ModalAnotation extends React.Component {
         onRequestClose={controlModal}
         style={customStyles}
         contentLabel="Modal Anotation"
+        ariaHideApp={false}
       >
         <div className="modal" id="new-Anotation">
           <form className="modal-content">
@@ -53,6 +54,8 @@ export class ModalAnotation extends React.Component {
             />
 
             <ReactMde
+              className="btnMdeTabs"
+              minEditorHeight={200}
               onChange={this.handleValueChange}
               onTabChange={this.handleTabChange}
               value={post ? post.content : null}

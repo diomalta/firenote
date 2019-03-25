@@ -25,7 +25,7 @@ export const Content = styled.div`
     border-image: initial;
     text-decoration: none;
     transition: all 0.2s ease 0s;
-    padding: 0px 25px;
+    padding: 0px 20px;
     background: #614DA3;
     margin-left: 10px;
 
@@ -93,6 +93,16 @@ export const Category = styled.div`
   }
 `;
 
+export const Line = styled.hr`
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 2px solid rgb(33, 34, 44);
+  padding: 0;
+  margin: 15px 0px;
+  width: 100%;
+`;
+
 export const Box = styled.div`
   display: flex;
   flex-direction: column;
@@ -102,8 +112,8 @@ export const Box = styled.div`
   border-radius: 10px;
   margin: 5px 0px;
   padding: 20px 20px 40px 20px;
-  border-left: 5px solid #494C63;
-  border-right: 5px solid #494C63;
+  border-left: 8px solid #494C63;
+  /* border-right: 5px solid #494C63; */
 `;
 
 export const Anotation = styled.div`

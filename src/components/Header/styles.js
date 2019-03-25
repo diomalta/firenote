@@ -19,7 +19,7 @@ export const Title = styled.h1`
   margin-block-end: 0.67em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  margin-left: 20px;
+  /* margin-left: 20px; */
   font-weight: bold;
   font-size: 24px;
   color: #fff;

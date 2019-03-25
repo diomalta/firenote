@@ -41,8 +41,8 @@ export const Nav = styled.ul`
     margin-bottom: 10px;
 
     img {
-      height: 38px;
-      width: 38px;
+      height: 32px;
+      width: 32px;
       margin-bottom: 10px;
     }
   }

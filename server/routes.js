@@ -31,6 +31,7 @@ routes.get("/api/subcategory/:_id", SubCategoryController.showAll);
 
 // ANOTATIONS
 routes.post("/api/anotation/store", AnotationController.store);
+routes.put("/api/anotation/update", AnotationController.update);
 routes.get("/api/subcategory/:_id/anotation/:postId", AnotationController.show);
 
 module.exports = routes;

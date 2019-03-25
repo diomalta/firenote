@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import { ModalAnotation } from '../Posts/Modal';
-import { Container, Header, Title, Content, Wrapper, Box, Anotation } from './styles';
+import { Container, Header, Title, Content, Wrapper, Box, Anotation, Line } from './styles';
 
 import API from '../../services/api';
 
@@ -13,7 +13,8 @@ class Posts extends Component {
     this.state = {
       modalIsOpen: false,
       _id: null,
-      post: {},
+      content: null,
+      titlePost: null,
       subcategory: []
     };
   }
@@ -30,7 +31,8 @@ class Posts extends Component {
     response.data.post.map(post => {
       if (post) {
         this.setState({ 
-          post,
+          titlePost: post.title,
+          content: post.content,
           subcategory: response.data.subcategory 
         });
       }
@@ -54,19 +56,41 @@ class Posts extends Component {
     })
   }
 
-  setContent = (contentPost) => {
-    this.setState({ contentPost });
+  setContent = (content) => {
+    this.setState({ content });
+  }
+
+  onSubmit = async (e) => {
+    e.preventDefault();
+
+    const { titlePost, content } = this.state;
+    
+    const _id = this.getParams(2);
+    const idAnotation = this.getParams(4);
+    
+    await API.put('/anotation/update', {
+      title: titlePost, 
+      content,
+      idAnotation,
+      _id
+    });
+    
+    this.controlModal();
+  };
+
+  getParams = (number) => {
+    return this.props.location.pathname.split('/')[number];
   }
 
   render() {
-    const { modalIsOpen, post, subcategory } = this.state;
+    const { modalIsOpen, titlePost, content, subcategory } = this.state;
     
     return (
       <Container>
         <Header>
           <Title color={subcategory.color}>
             <span>{subcategory.sigla}</span>
-            <i style={{ marginRight: '10px' }} className="fas fa-chevron-right"></i>
+            <i style={{ marginRight: '10px', color: 'rgb(139, 131, 152)' }} className="fas fa-chevron-right"></i>
             {subcategory.title}
           </Title>
           <Content>
@@ -78,11 +102,12 @@ class Posts extends Component {
         <Wrapper>
           <Box>
             <Title>
-              <i style={{ marginRight: '10px' }} className="fas fa-pen-square"></i>
-              {post.title}
+              <i style={{ marginRight: '10px', color: 'rgb(139, 131, 152)', fontSize: '14px' }} class="fas fa-paste"></i>
+              {titlePost}
             </Title>
+            <Line />
             <Anotation>
-              <ReactMarkdown source={post.content} />                      
+              <ReactMarkdown source={content} />                      
             </Anotation>
           </Box>
         </Wrapper>
@@ -93,7 +118,10 @@ class Posts extends Component {
           handleChange={ this.handleChange }
           setContent={this.setContent}
           onSubmit={this.onSubmit} 
-          post={post}
+          post={{
+            title: titlePost, 
+            content
+          }}
         />
       </Container>
     );

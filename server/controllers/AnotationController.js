@@ -55,4 +55,35 @@ module.exports = {
       return next(err);
     }
   },
+
+  async update(req, res, next) {
+    try {
+      const { _id, title, content, idAnotation } = req.body;
+      
+      const subCategory = await SubCategory.findOne({ _id });
+
+      if (!subCategory) {
+        return res.status(200).json({ message: 'Sub categoria não encotrada' });
+      }
+
+      const post = await Promise.all(subCategory.anotations.map(post => {
+        if(String(post._id) === idAnotation) {
+          post.title = title;
+          post.content = content;
+        }
+        return post;
+      }));
+
+      subCategory.anotations = post;
+      subCategory.markModified('anotations'); 
+      await subCategory.save();
+      
+      return res.status(200).json({ 
+        subCategory,
+        message: 'Anotação atualizada'
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
 };

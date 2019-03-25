@@ -63,7 +63,7 @@ class EditModal extends Component {
               </textarea>
             </div>
             {/* eslint-disable-next-line */}
-            <a style={{ background: ColorChange }} onClick={ onTogglePicker }>
+            <a style={{ background: ColorChange, color: '#fff' }} onClick={ onTogglePicker }>
               Escolha uma cor
             </a>
 
