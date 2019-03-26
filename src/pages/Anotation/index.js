@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
-import ReactMarkdown from 'react-markdown';
-
 import { ModalAnotation } from '../Posts/Modal';
 import { Container, Header, Title, Content, Wrapper, Box, Anotation, Line } from './styles';
 
 import API from '../../services/api';
+
+const ReactMarkdown = require('react-markdown');
+const hljs = require('highlight.js');
+const md = require('markdown-it')({
+  html:         true,        // Enable HTML tags in source
+  xhtmlOut:     true,        // Use '/' to close single tags (<br />).
+  breaks:       true,        // Convert '\n' in paragraphs into <br>
+  linkify:      true,        // Autoconvert URL-like text to links
+  typographer:  true,
+  highlight: (str, lang) => {
+    if (lang && hljs.getLanguage(lang)) {
+      return `<pre class="hljs"><code>${hljs.highlight(lang, str.trim(), true).value}</code></pre>`;
+    }
+    return `<pre class="hljs"><code>${md.utils.escapeHtml(str.trim())}</code></pre>`;
+  }
+});
 
 class Posts extends Component {
   constructor(props) {
@@ -13,7 +27,7 @@ class Posts extends Component {
     this.state = {
       modalIsOpen: false,
       _id: null,
-      content: null,
+      content: '',
       titlePost: null,
       subcategory: []
     };
@@ -107,7 +121,11 @@ class Posts extends Component {
             </Title>
             <Line />
             <Anotation>
-              <ReactMarkdown source={content} />                      
+              <ReactMarkdown
+                source={md.render(content)}
+                escapeHtml={false}
+                rawSourcePos={true}
+              />   
             </Anotation>
           </Box>
         </Wrapper>
