@@ -4,42 +4,40 @@ Aplicativo feitos para anotações onde se organiza por categorias, subcategoria
 
 ---
 
-FireNote feito por
-
-<a href="https://github.com/DioHX" rel="nofollow" target="_blank">
+FireNote feito por <a href="https://github.com/DioHX" rel="nofollow" target="_blank">
 <!--   <img src="https://avatars2.githubusercontent.com/u/22456325?s=460&v=4" width="300"><br /> -->
   DioHX: The developer
 </a>
 
 ---
 
-## Baixando
+## Baixando ✔
 
 ```
 git clone https://github.com/DioHX/FireNote.git
 ```
 
-## Instalando
+## Instalando ✔
 
 ```
 yarn install
 ```
 
-## Iniciando
+## Iniciando ✔
 
 Pode ser iniciado separadamente o cliente e servidor, como também pode iniciar os dos processos em paralelo.
 
-Server
+Server 😜
 ```
 yarn server
 ```
 
-Client
+Client 😜
 ```
 yarn client
 ```
 
-Aplicação
+Aplicação 😜
 ```
 yarn start
 ```
