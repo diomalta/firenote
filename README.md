@@ -7,7 +7,7 @@ Aplicativo feitos para anotações onde se organiza por categorias, subcategoria
 FireNote feito por
 
 <a href="https://github.com/DioHX" rel="nofollow" target="_blank">
-  <img src="https://avatars2.githubusercontent.com/u/22456325?s=460&v=4" width="300"><br />
+<!--   <img src="https://avatars2.githubusercontent.com/u/22456325?s=460&v=4" width="300"><br /> -->
   DioHX: The developer
 </a>
 
@@ -26,6 +26,8 @@ yarn install
 ```
 
 ## Iniciando
+
+Pode ser iniciado separadamente o cliente e servidor, como também pode iniciar os dos processos em paralelo.
 
 Server
 ```
