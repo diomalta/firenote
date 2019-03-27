@@ -156,6 +156,18 @@ input:focus, textarea:focus {
   background: #DD4F43;
 }
 
+.mde-header ul.mde-header-group li.mde-header-item ul.react-mde-dropdown li {
+  margin: 0  !important;
+  white-space: nowrap !important;
+  list-style: none !important;
+  display: block !important;
+  height: 20px !important;
+}
+
+.mde-header ul.mde-header-group li.mde-header-item ul.react-mde-dropdown {
+  top: 40px !important;
+}
+
 .alert-hidden {
   opacity: 0;
 }

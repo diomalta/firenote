@@ -58,7 +58,7 @@ export class ModalAnotation extends React.Component {
               minEditorHeight={200}
               onChange={this.handleValueChange}
               onTabChange={this.handleTabChange}
-              value={post ? post.content : null}
+              value={post ? post.content : this.state.value}
               generateMarkdownPreview={markdown =>
                 Promise.resolve(this.converter.makeHtml(markdown))
               }
