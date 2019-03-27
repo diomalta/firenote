@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+
 import Loadable from 'react-loadable';
 
 import { Provider } from './services/contextApi';
 
 import { GlobalStyle } from './styles/components';
 
+import 'react-toastify/dist/ReactToastify.css';
 import './styles/dracula.css';
 import './styles/core.css';
 import "react-mde/lib/styles/css/react-mde-all.css";

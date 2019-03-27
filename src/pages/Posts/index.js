@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { ModalAnotation } from './Modal';
 import EditModal from './EditModal';
 import { Container, Header, Title, Content, Wrapper, Box } from './styles';
+import { Success, Danger } from '../../components/Flash';
 
 import API from '../../services/api';
 
@@ -63,6 +64,11 @@ export default class Posts extends Component {
       content: content,
     });
 
+    if (!response.data.anotation) {
+      return Danger('Anotação não foi cadastrada...');
+    }
+
+    Success('Anotação adcionada com sucesso...');
     if (posts) {
       this.setState({ 
         posts: [ ...this.state.posts, response.data.anotation ]
@@ -107,13 +113,18 @@ export default class Posts extends Component {
     e.preventDefault();
     const { title, content, color, idCategory } = this.state;
 
-    await API.post('/subcategory/update', {
+    const response = await API.post('/subcategory/update', {
       _id: idCategory,
       title: title, 
       content: content,
       color: color
     });
 
+    if (!response.data.subCategory) {
+      return Danger('Subcategoria não foi atualizada...');
+    }
+
+    Success('Subcategoria foi atualizada...');
     this.controlModalSub();
   }
 

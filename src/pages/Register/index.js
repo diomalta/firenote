@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
+import { Success, Danger } from '../../components/Flash';
 
 import API from '../../services/api';
 
@@ -35,8 +36,11 @@ export default class Register extends Component {
       localStorage.setItem('@email', user.email);
       localStorage.setItem('@name', user.name);
 
+      Success('Usuário cadastrado com sucesso...')
       this.setState({ redirect: true });
     } else {
+      Danger('Email já está cadastro...');
+      
       this.setState({ 
         name: null,
         email: null,

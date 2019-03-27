@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
 
+import { Success, Danger } from '../../components/Flash';
 import API from '../../services/api';
 
 export default class Login extends Component {
@@ -35,8 +36,13 @@ export default class Login extends Component {
       localStorage.setItem('@name', user.name);
       localStorage.setItem('@token', token);
 
+      Success('Logado com sucesso...'); 
+
       this.setState({ redirect: true });
     } else {
+
+      Danger('Email ou senha incorretos..');
+      
       this.setState({ 
         name: null,
         email: null,

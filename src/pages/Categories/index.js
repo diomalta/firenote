@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ModalCategory, ModalCategorySub } from './Modal';
 
 import { Container, Header, Title, Content, Wrapper, Category, Box } from './styles';
+import { Success, Danger } from '../../components/Flash';
 
 import API from '../../services/api';
 
@@ -80,7 +81,12 @@ export class Categories extends Component {
         title: titleCategory, 
         content: contentCategory,
       });
-      
+
+      if (!response.data.category) {
+        return Danger('Não foi possivel adcionar a nova categoria...');
+      }
+
+      Success('Categoria cadastrada...');
       this.setState({ 
         categories: [ 
           ...this.state.categories, response.data.category 
@@ -94,6 +100,10 @@ export class Categories extends Component {
         email,
       });
       
+      if (!response.data.categories) {
+        return Danger('Não foi possivel atualizar a categoria...');
+      }
+      Success('Categoria atualizada...');
       this.setState({ categories: response.data.categories });
     }
     
@@ -115,9 +125,14 @@ export class Categories extends Component {
     });
 
     const { subCategory } = response.data;
+
+    if (!subCategory) {
+      return Danger('Não foi possivel adcionar a nova categoria...');
+    }
+
+    Success('Subcategoria cadastrada...');
     categories.map(category => {
       if (category._id === subCategory.categoryId) {
-
         if (!category.subCategories) {
           return category.subCategories = [{ ...subCategory }];
         }      

@@ -1,6 +1,6 @@
 import React, { Component, Suspense, lazy } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-
+import { ToastContainer } from 'react-toastify';
 import { Container, Content } from '../../styles/components';
 
 // routes config
@@ -16,6 +16,7 @@ class DefaultLayout extends Component {
 
     return (
       <Container>
+        <ToastContainer />
         <Suspense fallback={loading}>
           <Sidebar />
         </Suspense>

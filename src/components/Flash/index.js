@@ -1,13 +1,9 @@
-import React from 'react';
-import { Consumer } from '../../services/contextApi';
+import { toast } from 'react-toastify';
  
-const Flash = () => (
-  <Consumer>
-    {({ flashMessage }) => (
-      <h1>{flashMessage}</h1>
-    )}
-  </Consumer>
-);
+export const Success = (msg) => toast.success(msg, {
+  className: 'alert alert-success',
+});
 
-export default Flash;
-
+export const Danger = (msg) => toast.error(msg, {
+  className: 'alert alert-danger',
+});

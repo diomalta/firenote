@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ModalAnotation } from '../Posts/Modal';
 import { Container, Header, Title, Content, Wrapper, Box, Anotation, Line } from './styles';
+import { Success, Danger } from '../../components/Flash';
 
 import API from '../../services/api';
 
@@ -82,13 +83,18 @@ class Posts extends Component {
     const _id = this.getParams(2);
     const idAnotation = this.getParams(4);
     
-    await API.put('/anotation/update', {
+    const response = await API.put('/anotation/update', {
       title: titlePost, 
       content,
       idAnotation,
       _id
     });
     
+    if (!response.data.subCategory) {
+      return Danger('Anotação não foi atualizada...');
+    }
+    
+    Success('Anotação atualizada...');
     this.controlModal();
   };
 
