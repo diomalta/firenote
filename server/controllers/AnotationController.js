@@ -14,16 +14,17 @@ module.exports = {
         return res.status(200).json({ message: 'Sub categoria não encotrada' });
       }
       
+      const objectId = new ObjectId();
       subCategory.anotations.push({ 
         ...req.body,
-        _id: new ObjectId()
+        _id: objectId
       });
 
       await subCategory.save();
 
       return res.status(200).json({ 
         subCategory,
-        anotation: { ...req.body },
+        anotation: { ...req.body, _id: objectId },
         message: 'Anotação criada com sucesso'
       });
     } catch (err) {
@@ -40,10 +41,10 @@ module.exports = {
       if (!subcategory) {
         return res.status(200).json({ message: 'Sub categoria não encotrada' });
       }
-
+      
       const { anotations } = subcategory;
       const post = await Promise.all(anotations.map(post => {
-        if(String(post._id)=== postId) return post;
+        if(String(post._id) === postId) return post;
       }));
       
       return res.status(200).json({ 

@@ -163,7 +163,7 @@ export default class Posts extends Component {
                     </span>
                     <div>
                       <a href={`/#/subcategories/${subcategory._id}/anotation/${anotation._id}`}>{anotation.title}</a>
-                      <small>Por Diego Malta - há um dia</small>
+                      {/* <small>Por Diego Malta - há um dia</small> */}
                     </div>
                   </div>
                 </Box>
