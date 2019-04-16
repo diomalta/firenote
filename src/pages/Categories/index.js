@@ -1,10 +1,18 @@
-import React, { Component } from 'react';
-import { ModalCategory, ModalCategorySub } from './Modal';
+import React, { Component } from "react";
+import { ModalCategory, ModalCategorySub } from "./Modal";
 
-import { Container, Header, Title, Content, Wrapper, Category, Box } from './styles';
-import { Success, Danger } from '../../components/Flash';
+import {
+  Container,
+  Header,
+  Title,
+  Content,
+  Wrapper,
+  Category,
+  Box
+} from "./styles";
+import { Success, Danger } from "../../components/Flash";
 
-import API from '../../services/api';
+import API from "../../services/api";
 
 export class Categories extends Component {
   constructor(props) {
@@ -21,103 +29,109 @@ export class Categories extends Component {
       idCategory: null,
       titleCategory: null,
       contentCategory: null,
-      
+
       categorySubCategory: null,
       titleSubCategory: null,
       contentSubCategory: null,
       colorSubCategory: null,
 
       editCategory: null,
-      pickerVisible: false,
+      pickerVisible: false
     };
   }
 
   async componentDidMount() {
     await this.onGetCategories();
     this.setState({
-      name: localStorage.getItem('@name'),
-      email: localStorage.getItem('@email'),
+      name: localStorage.getItem("@name"),
+      email: localStorage.getItem("@email")
     });
   }
 
   controlModal = () => {
     this.setState(prevState => ({ modalIsOpen: !prevState.modalIsOpen }));
-  }
+  };
 
   controlModalSub = () => {
     this.setState(prevState => ({ modalIsOpenSub: !prevState.modalIsOpenSub }));
-  }
+  };
 
   onGetCategories = async () => {
-    const _id = localStorage.getItem('@id');
+    const _id = localStorage.getItem("@id");
 
     const response = await API.get(`/user/show/${_id}`);
     const { categories } = response.data;
-    
+
     if (categories) {
       this.setState({ categories });
     }
   };
 
-  handleChange = (event) => {
+  handleChange = event => {
     const { name, value } = event.target;
-    
+
     this.setState({
       [name]: value
-    })
-  }
+    });
+  };
 
   handleColorChange = ({ hex }) => this.setState({ colorSubCategory: hex });
-  onTogglePicker = () => this.setState({ pickerVisible: !this.state.pickerVisible })
+  onTogglePicker = () =>
+    this.setState({ pickerVisible: !this.state.pickerVisible });
 
-  onSubmitCategory = async (e) => {
+  onSubmitCategory = async e => {
     e.preventDefault();
     const { titleCategory, contentCategory, email, idCategory } = this.state;
 
     let response;
-    if (!idCategory) {    
-       response = await API.post('/category/store', {
+    if (!idCategory) {
+      response = await API.post("/category/store", {
         email,
-        title: titleCategory, 
-        content: contentCategory,
+        title: titleCategory,
+        content: contentCategory
       });
 
       if (!response.data.category) {
-        return Danger('Não foi possivel adcionar a nova categoria...');
+        return Danger("Não foi possivel adcionar a nova categoria...");
       }
 
-      Success('Categoria cadastrada...');
-      this.setState({ 
-        categories: [ 
-          ...this.state.categories, response.data.category 
-        ]
+      Success("Categoria cadastrada...");
+      this.setState({
+        categories: [...this.state.categories, response.data.category]
       });
     } else {
-      response = await API.put('/category/update', {
+      response = await API.put("/category/update", {
         _id: idCategory,
-        title: titleCategory, 
+        title: titleCategory,
         content: contentCategory,
-        email,
+        email
       });
-      
+
       if (!response.data.categories) {
-        return Danger('Não foi possivel atualizar a categoria...');
+        return Danger("Não foi possivel atualizar a categoria...");
       }
-      Success('Categoria atualizada...');
+      Success("Categoria atualizada...");
       this.setState({ categories: response.data.categories });
     }
-    
+
     this.controlModal();
   };
 
-  onSubmitSubCategory = async (e) => {
+  onSubmitSubCategory = async e => {
     e.preventDefault();
 
-    const { titleSubCategory, contentSubCategory, categorySubCategory, email, categories, colorSubCategory } = this.state;
-    
-    const response = await API.post('/subcategory/store', {
+    const {
+      titleSubCategory,
+      contentSubCategory,
+      categorySubCategory,
       email,
-      title: titleSubCategory, 
+      categories,
+      colorSubCategory
+    } = this.state;
+
+    const response = await API.post("/subcategory/store", {
+      email,
+      title: titleSubCategory,
       content: contentSubCategory,
       sigla: titleSubCategory.charAt(0),
       categoryId: categorySubCategory,
@@ -127,99 +141,118 @@ export class Categories extends Component {
     const { subCategory } = response.data;
 
     if (!subCategory) {
-      return Danger('Não foi possivel adcionar a nova categoria...');
+      return Danger("Não foi possivel adcionar a nova categoria...");
     }
 
-    Success('Subcategoria cadastrada...');
+    Success("Subcategoria cadastrada...");
     categories.map(category => {
       if (category._id === subCategory.categoryId) {
         if (!category.subCategories) {
-          return category.subCategories = [{ ...subCategory }];
-        }      
+          return (category.subCategories = [{ ...subCategory }]);
+        }
         return category.subCategories.push({ ...subCategory });
       }
       return category;
-    })
-    
+    });
+
     this.setState({ categories });
     this.controlModalSub();
   };
 
   handleEdit = (event, category) => {
     event.preventDefault();
-    this.setState({ 
+    this.setState({
       idCategory: category._id,
       titleCategory: category.title,
-      contentCategory: category.content,
+      contentCategory: category.content
     });
     this.controlModal();
-  }
+  };
 
-  render () {
-    const { modalIsOpen, modalIsOpenSub, name, categories, titleCategory, contentCategory, pickerVisible, colorSubCategory } = this.state;
+  render() {
+    const {
+      modalIsOpen,
+      modalIsOpenSub,
+      name,
+      categories,
+      titleCategory,
+      contentCategory,
+      pickerVisible,
+      colorSubCategory
+    } = this.state;
 
     return (
       <Container>
         <Header>
-          <Title>Bem vindo, <span>{ name } :D</span></Title>
+          <Title>
+            Bem vindo, <span>{name} :D</span>
+          </Title>
           <Content>
-            <button onClick={this.controlModal}><i className="fas fa-address-book"></i>Categoria</button>
-            <button onClick={this.controlModalSub}><i className="far fa-address-book"></i>SubCategoria</button>
+            <button onClick={this.controlModal}>
+              <i className="fas fa-address-book" />
+              Categoria
+            </button>
+            <button onClick={this.controlModalSub}>
+              <i className="far fa-address-book" />
+              SubCategoria
+            </button>
           </Content>
         </Header>
-        {
-          categories.length > 0 
-          ? categories.map((category, id) => {
+        {categories.length > 0 ? (
+          categories.map((category, id) => {
             return (
               <Wrapper key={id}>
-                <Category >
+                <Category>
                   <h3>
-                    { category.title }
-                    <i onClick={(e) => this.handleEdit(e, category)} className="fas fa-edit"></i>
+                    {category.title}
+                    <i
+                      onClick={e => this.handleEdit(e, category)}
+                      className="fas fa-edit"
+                    />
                     {/* <i className="fas fa-times-circle"></i> */}
-                    <small>
-                      { category.content }                      
-                    </small>
+                    <small>{category.content}</small>
                   </h3>
                 </Category>
-                {
-                  category.subCategories
-                  ? category.subCategories.map((sub, id)=> {
+                {category.subCategories ? (
+                  category.subCategories.map((sub, id) => {
                     return (
-                      <Box key={id} color={ sub.color }>
+                      <Box key={id} color={sub.color}>
                         <div>
                           <span>
-                            <h1>{ sub.sigla }</h1>
+                            <h1>{sub.sigla}</h1>
                           </span>
-                          <a href={`/#/anotations/${sub._id}`}>{sub.title}</a>
+                          <a href={`/anotations/${sub._id}`}>{sub.title}</a>
                         </div>
                         <h2>Informação indisponivel</h2>
                       </Box>
-                    )
+                    );
                   })
-                  : <small>Nenhuma subcategoria foi criada até o momento...</small>
-                }
+                ) : (
+                  <small>
+                    Nenhuma subcategoria foi criada até o momento...
+                  </small>
+                )}
               </Wrapper>
-            )
+            );
           })
-          : 
+        ) : (
           <Wrapper>
             <h2>Nenhuma categoria criada até o momento...</h2>
           </Wrapper>
-        }
+        )}
         {ModalCategory({
-          modalIsOpen, 
+          modalIsOpen,
           controlModal: this.controlModal,
           handleChange: this.handleChange,
           onSubmitCategory: this.onSubmitCategory,
           data: {
             title: titleCategory,
-            content: contentCategory,
+            content: contentCategory
           }
         })}
 
         {ModalCategorySub({
-          modalIsOpenSub, 
+          modalIsOpenSub,
           controlModalSub: this.controlModalSub,
           handleChange: this.handleChange,
           categories,
@@ -230,10 +263,8 @@ export class Categories extends Component {
           ColorChange: colorSubCategory
         })}
       </Container>
-    )
+    );
   }
-};
-
-
+}
 
 export default Categories;

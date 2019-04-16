@@ -29,7 +29,10 @@ API.interceptors.response.use(
     return response;
   },
   function(error) {
-    if (401 === error.response.status) window.location = "/#/signin";
+    if (401 === error.response.status) {
+      localStorage.clear();
+      window.location = "/signin";
+    }
   }
 );
 
