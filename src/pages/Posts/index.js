@@ -23,7 +23,7 @@ export default class Posts extends Component {
       title: null,
       content: null,
       color: null,
-      modalIsOpenSub: null,
+      modalIsOpenSub: false,
 
       categories: null,
       editCategory: null,
@@ -182,9 +182,9 @@ export default class Posts extends Component {
 
             <Wrapper>
               {posts ? (
-                posts.map(anotation => {
+                posts.map((anotation, idx) => {
                   return (
-                    <Box>
+                    <Box key={idx}>
                       <div>
                         <span>
                           <h1>

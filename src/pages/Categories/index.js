@@ -28,13 +28,13 @@ export class Categories extends Component {
       categories: [],
 
       idCategory: null,
-      titleCategory: null,
-      contentCategory: null,
+      titleCategory: "",
+      contentCategory: "",
 
       categorySubCategory: null,
-      titleSubCategory: null,
-      contentSubCategory: null,
-      colorSubCategory: null,
+      titleSubCategory: "",
+      contentSubCategory: "",
+      colorSubCategory: "",
 
       editCategory: null,
       pickerVisible: false,
