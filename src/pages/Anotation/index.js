@@ -11,6 +11,7 @@ import {
   Line
 } from "./styles";
 import { Success, Danger } from "../../components/Flash";
+import Loading from "../../components/Loading";
 
 import API from "../../services/api";
 
@@ -43,15 +44,19 @@ class Posts extends Component {
       _id: null,
       content: "",
       titlePost: null,
-      subcategory: []
+      subcategory: [],
+      pageLoading: true
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const _id = this.getParams(2);
     const postId = this.getParams(4);
-    this.onGetAnotation(_id, postId);
-    this.setState({ _id });
+    await this.onGetAnotation(_id, postId);
+    this.setState({
+      _id,
+      pageLoading: false
+    });
   }
 
   onGetAnotation = async (_id, postId) => {
@@ -116,67 +121,79 @@ class Posts extends Component {
   };
 
   render() {
-    const { modalIsOpen, titlePost, content, subcategory } = this.state;
+    const {
+      modalIsOpen,
+      titlePost,
+      content,
+      subcategory,
+      pageLoading
+    } = this.state;
 
     return (
-      <Container>
-        <Header>
-          <Title color={subcategory.color}>
-            <span>{subcategory.sigla}</span>
-            <i
-              style={{ marginRight: "10px", color: "rgb(139, 131, 152)" }}
-              className="fas fa-chevron-right"
+      <>
+        {pageLoading ? (
+          <Loading />
+        ) : (
+          <Container>
+            <Header>
+              <Title color={subcategory.color}>
+                <span>{subcategory.sigla}</span>
+                <i
+                  style={{ marginRight: "10px", color: "rgb(139, 131, 152)" }}
+                  className="fas fa-chevron-right"
+                />
+                {subcategory.title}
+              </Title>
+              <Content>
+                <button onClick={this.controlModal}>
+                  <i className="fas fa-pencil-alt" />
+                  Editar
+                </button>
+                <a href={`/anotations/${subcategory._id}`}>
+                  <i className="fas fa-chevron-left" />
+                  Voltar
+                </a>
+              </Content>
+            </Header>
+
+            <Wrapper>
+              <Box>
+                <Title>
+                  <i
+                    style={{
+                      marginRight: "10px",
+                      color: "rgb(139, 131, 152)",
+                      fontSize: "14px"
+                    }}
+                    className="fas fa-paste"
+                  />
+                  {titlePost}
+                </Title>
+                <Line />
+                <Anotation>
+                  <ReactMarkdown
+                    source={md.render(content)}
+                    escapeHtml={false}
+                    rawSourcePos={true}
+                  />
+                </Anotation>
+              </Box>
+            </Wrapper>
+
+            <ModalAnotation
+              modalIsOpen={modalIsOpen}
+              controlModal={this.controlModal}
+              handleChange={this.handleChange}
+              setContent={this.setContent}
+              onSubmit={this.onSubmit}
+              post={{
+                title: titlePost,
+                content
+              }}
             />
-            {subcategory.title}
-          </Title>
-          <Content>
-            <button onClick={this.controlModal}>
-              <i className="fas fa-pencil-alt" />
-              Editar
-            </button>
-            <a href={`/anotations/${subcategory._id}`}>
-              <i className="fas fa-chevron-left" />
-              Voltar
-            </a>
-          </Content>
-        </Header>
-
-        <Wrapper>
-          <Box>
-            <Title>
-              <i
-                style={{
-                  marginRight: "10px",
-                  color: "rgb(139, 131, 152)",
-                  fontSize: "14px"
-                }}
-                class="fas fa-paste"
-              />
-              {titlePost}
-            </Title>
-            <Line />
-            <Anotation>
-              <ReactMarkdown
-                source={md.render(content)}
-                escapeHtml={false}
-                rawSourcePos={true}
-              />
-            </Anotation>
-          </Box>
-        </Wrapper>
-
-        <ModalAnotation
-          modalIsOpen={modalIsOpen}
-          controlModal={this.controlModal}
-          handleChange={this.handleChange}
-          setContent={this.setContent}
-          onSubmit={this.onSubmit}
-          post={{
-            title: titlePost,
-            content
-          }}
-        />
-      </Container>
+          </Container>
+        )}
+      </>
     );
   }
 }

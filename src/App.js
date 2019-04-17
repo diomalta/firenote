@@ -12,13 +12,10 @@ import "./styles/dracula.css";
 import "./styles/core.css";
 import "react-mde/lib/styles/css/react-mde-all.css";
 
-const loading = () => <div className="loading">Loading...</div>;
-
 // Containers
-const DefaultLayout = Loadable({
-  loader: () => import("./pages/DefaultLayout"),
-  loading
-});
+import DefaultLayout from "./pages/DefaultLayout";
+
+const loading = () => <div className="loading">Loading...</div>;
 
 // Pages
 const Login = Loadable({
@@ -36,8 +33,8 @@ class App extends Component {
     const checkAuth = () => {
       if (
         !localStorage.getItem("@email") ||
-        !localStorage.getItem("@id") ||
-        !localStorage.getItem("@token")
+        !localStorage.getItem("@token") ||
+        !localStorage.getItem("@id")
       ) {
         return false;
       }

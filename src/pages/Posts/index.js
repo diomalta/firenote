@@ -4,6 +4,7 @@ import { ModalAnotation } from "./Modal";
 import EditModal from "./EditModal";
 import { Container, Header, Title, Content, Wrapper, Box } from "./styles";
 import { Success, Danger } from "../../components/Flash";
+import Loading from "../../components/Loading";
 
 import API from "../../services/api";
 
@@ -25,14 +26,18 @@ export default class Posts extends Component {
       modalIsOpenSub: null,
 
       categories: null,
-      editCategory: null
+      editCategory: null,
+      pageLoading: true
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const _id = this.getParams(2);
-    this.getPosts(_id);
-    this.setState({ _id });
+    await this.getPosts(_id);
+    this.setState({
+      _id,
+      pageLoading: false
+    });
   }
 
   getPosts = async _id => {
@@ -147,80 +152,87 @@ export default class Posts extends Component {
       categories,
       content,
       pickerVisible,
-      _id
+      _id,
+      pageLoading
     } = this.state;
 
     return (
-      <Container>
-        <Header>
-          <Title color={color}>
-            <span>{sigla}</span>
-            {title}
-            <i onClick={this.handleEdit} className="fas fa-edit" />
-          </Title>
-          <Content>
-            <button onClick={this.controlModal}>
-              <i className="fas fa-plus-circle" />
-              Criar anotação
-            </button>
-            <a href="/categories">
-              <i className="fas fa-chevron-left" />
-              Voltar
-            </a>
-          </Content>
-        </Header>
+      <>
+        {pageLoading ? (
+          <Loading />
+        ) : (
+          <Container>
+            <Header>
+              <Title color={color}>
+                <span>{sigla}</span>
+                {title}
+                <i onClick={this.handleEdit} className="fas fa-edit" />
+              </Title>
+              <Content>
+                <button onClick={this.controlModal}>
+                  <i className="fas fa-plus-circle" />
+                  Criar anotação
+                </button>
+                <a href="/categories">
+                  <i className="fas fa-chevron-left" />
+                  Voltar
+                </a>
+              </Content>
+            </Header>
 
-        <Wrapper>
-          {posts ? (
-            posts.map(anotation => {
-              return (
-                <Box>
-                  <div>
-                    <span>
-                      <h1>
-                        <i className="fas fa-book" />
-                      </h1>
-                    </span>
-                    <div>
-                      <a
-                        href={`/subcategories/${subcategory._id}/anotation/${
-                          anotation._id
-                        }`}
-                      >
-                        {anotation.title}
-                      </a>
-                      {/* <small>Por Diego Malta - há um dia</small> */}
-                    </div>
-                  </div>
-                </Box>
-              );
-            })
-          ) : (
-            <h2>Sem anotações no momento...</h2>
-          )}
-        </Wrapper>
+            <Wrapper>
+              {posts ? (
+                posts.map(anotation => {
+                  return (
+                    <Box>
+                      <div>
+                        <span>
+                          <h1>
+                            <i className="fas fa-book" />
+                          </h1>
+                        </span>
+                        <div>
+                          <a
+                            href={`/subcategories/${
+                              subcategory._id
+                            }/anotation/${anotation._id}`}
+                          >
+                            {anotation.title}
+                          </a>
+                          {/* <small>Por Diego Malta - há um dia</small> */}
+                        </div>
+                      </div>
+                    </Box>
+                  );
+                })
+              ) : (
+                <h2>Sem anotações no momento...</h2>
+              )}
+            </Wrapper>
 
-        <ModalAnotation
-          modalIsOpen={modalIsOpen}
-          controlModal={this.controlModal}
-          handleChange={this.handleChange}
-          setContent={this.setContent}
-          onSubmit={this.onSubmit}
-        />
+            <ModalAnotation
+              modalIsOpen={modalIsOpen}
+              controlModal={this.controlModal}
+              handleChange={this.handleChange}
+              setContent={this.setContent}
+              onSubmit={this.onSubmit}
+            />
 
-        <EditModal
-          modalIsOpenSub={modalIsOpenSub}
-          controlModalSub={this.controlModalSub}
-          handleChange={this.handleChange}
-          categories={categories}
-          onSubmitSubCategory={this.onSubmitCategory}
-          onTogglePicker={this.onTogglePicker}
-          handleColorChange={this.handleColorChange}
-          pickerVisible={pickerVisible}
-          ColorChange={color}
-          data={{ _id, title, content, color }}
-        />
-      </Container>
+            <EditModal
+              modalIsOpenSub={modalIsOpenSub}
+              controlModalSub={this.controlModalSub}
+              handleChange={this.handleChange}
+              categories={categories}
+              onSubmitSubCategory={this.onSubmitCategory}
+              onTogglePicker={this.onTogglePicker}
+              handleColorChange={this.handleColorChange}
+              pickerVisible={pickerVisible}
+              ColorChange={color}
+              data={{ _id, title, content, color }}
+            />
+          </Container>
+        )}
+      </>
     );
   }
 }

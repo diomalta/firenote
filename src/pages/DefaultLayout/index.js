@@ -1,33 +1,29 @@
-import React, { Component, Suspense, lazy } from "react";
+import React, { Component, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+
 import { Container, Content } from "../../styles/components";
 
-// routes config
-// import routes from '../../routes';
+import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
 
-const Header = lazy(() => import("../../components/Header"));
-const Sidebar = lazy(() => import("../../components/Sidebar"));
+import Anotation from "../Anotation";
+import Categories from "../Categories";
+import Posts from "../Posts";
 
-const Anotation = React.lazy(() => import("../Anotation"));
-const Categories = React.lazy(() => import("../Categories"));
-const Posts = React.lazy(() => import("../Posts"));
+import Loading from "../../components/Loading";
+
+const loading = () => <Loading />;
 
 class DefaultLayout extends Component {
   render() {
-    const loading = <div className="loading">Loading...</div>;
-
     return (
       <Container>
         <ToastContainer />
-        <Suspense fallback={loading}>
-          <Sidebar />
-        </Suspense>
+        <Sidebar />
 
         <Content>
-          <Suspense fallback={loading}>
-            <Header />
-          </Suspense>
+          <Header />
           <Suspense fallback={loading}>
             <Switch>
               <Route exact path="/categories" component={Categories} />

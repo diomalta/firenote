@@ -11,6 +11,7 @@ import {
   Box
 } from "./styles";
 import { Success, Danger } from "../../components/Flash";
+import Loading from "../../components/Loading";
 
 import API from "../../services/api";
 
@@ -36,7 +37,8 @@ export class Categories extends Component {
       colorSubCategory: null,
 
       editCategory: null,
-      pickerVisible: false
+      pickerVisible: false,
+      pageLoading: true
     };
   }
 
@@ -44,7 +46,8 @@ export class Categories extends Component {
     await this.onGetCategories();
     this.setState({
       name: localStorage.getItem("@name"),
-      email: localStorage.getItem("@email")
+      email: localStorage.getItem("@email"),
+      pageLoading: false
     });
   }
 
@@ -63,7 +66,7 @@ export class Categories extends Component {
     const { categories } = response.data;
 
     if (categories) {
-      this.setState({ categories });
+      await this.setState({ categories });
     }
   };
 
@@ -178,91 +181,99 @@ export class Categories extends Component {
       titleCategory,
       contentCategory,
       pickerVisible,
-      colorSubCategory
+      colorSubCategory,
+      pageLoading
     } = this.state;
 
+    // TODO: Precisa de um refatoramento urgente, component muito grande
     return (
-      <Container>
-        <Header>
-          <Title>
-            Bem vindo, <span>{name} :D</span>
-          </Title>
-          <Content>
-            <button onClick={this.controlModal}>
-              <i className="fas fa-address-book" />
-              Categoria
-            </button>
-            <button onClick={this.controlModalSub}>
-              <i className="far fa-address-book" />
-              SubCategoria
-            </button>
-          </Content>
-        </Header>
-        {categories.length > 0 ? (
-          categories.map((category, id) => {
-            return (
-              <Wrapper key={id}>
-                <Category>
-                  <h3>
-                    {category.title}
-                    <i
-                      onClick={e => this.handleEdit(e, category)}
-                      className="fas fa-edit"
-                    />
-                    {/* <i className="fas fa-times-circle"></i> */}
-                    <small>{category.content}</small>
-                  </h3>
-                </Category>
-                {category.subCategories ? (
-                  category.subCategories.map((sub, id) => {
-                    return (
-                      <Box key={id} color={sub.color}>
-                        <div>
-                          <span>
-                            <h1>{sub.sigla}</h1>
-                          </span>
-                          <a href={`/anotations/${sub._id}`}>{sub.title}</a>
-                        </div>
-                        <h2>Informação indisponivel</h2>
-                      </Box>
-                    );
-                  })
-                ) : (
-                  <small>
-                    Nenhuma subcategoria foi criada até o momento...
-                  </small>
-                )}
-              </Wrapper>
-            );
-          })
+      <>
+        {pageLoading ? (
+          <Loading />
         ) : (
-          <Wrapper>
-            <h2>Nenhuma categoria criada até o momento...</h2>
-          </Wrapper>
-        )}
-        {ModalCategory({
-          modalIsOpen,
-          controlModal: this.controlModal,
-          handleChange: this.handleChange,
-          onSubmitCategory: this.onSubmitCategory,
-          data: {
-            title: titleCategory,
-            content: contentCategory
-          }
-        })}
+          <Container>
+            <Header>
+              <Title>
+                Bem vindo, <span>{name} :D</span>
+              </Title>
+              <Content>
+                <button onClick={this.controlModal}>
+                  <i className="fas fa-address-book" />
+                  Categoria
+                </button>
+                <button onClick={this.controlModalSub}>
+                  <i className="far fa-address-book" />
+                  SubCategoria
+                </button>
+              </Content>
+            </Header>
+            {categories.length > 0 ? (
+              categories.map((category, id) => {
+                return (
+                  <Wrapper key={id}>
+                    <Category>
+                      <h3>
+                        {category.title}
+                        <i
+                          onClick={e => this.handleEdit(e, category)}
+                          className="fas fa-edit"
+                        />
+                        {/* <i className="fas fa-times-circle"></i> */}
+                        <small>{category.content}</small>
+                      </h3>
+                    </Category>
+                    {category.subCategories ? (
+                      category.subCategories.map((sub, id) => {
+                        return (
+                          <Box key={id} color={sub.color}>
+                            <div>
+                              <span>
+                                <h1>{sub.sigla}</h1>
+                              </span>
+                              <a href={`/anotations/${sub._id}`}>{sub.title}</a>
+                            </div>
+                            <h2>Informação indisponivel</h2>
+                          </Box>
+                        );
+                      })
+                    ) : (
+                      <small>
+                        Nenhuma subcategoria foi criada até o momento...
+                      </small>
+                    )}
+                  </Wrapper>
+                );
+              })
+            ) : (
+              <Wrapper>
+                <h2>Nenhuma categoria criada até o momento...</h2>
+              </Wrapper>
+            )}
+            {ModalCategory({
+              modalIsOpen,
+              controlModal: this.controlModal,
+              handleChange: this.handleChange,
+              onSubmitCategory: this.onSubmitCategory,
+              data: {
+                title: titleCategory,
+                content: contentCategory
+              }
+            })}
 
-        {ModalCategorySub({
-          modalIsOpenSub,
-          controlModalSub: this.controlModalSub,
-          handleChange: this.handleChange,
-          categories,
-          onSubmitSubCategory: this.onSubmitSubCategory,
-          onTogglePicker: this.onTogglePicker,
-          handleColorChange: this.handleColorChange,
-          pickerVisible,
-          ColorChange: colorSubCategory
-        })}
-      </Container>
+            {ModalCategorySub({
+              modalIsOpenSub,
+              controlModalSub: this.controlModalSub,
+              handleChange: this.handleChange,
+              categories,
+              onSubmitSubCategory: this.onSubmitSubCategory,
+              onTogglePicker: this.onTogglePicker,
+              handleColorChange: this.handleColorChange,
+              pickerVisible,
+              ColorChange: colorSubCategory
+            })}
+          </Container>
+        )}
+      </>
     );
   }
 }
