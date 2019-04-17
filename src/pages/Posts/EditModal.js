@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { CompactPicker   } from 'react-color'
-import Modal from 'react-modal';
+import React, { Component } from "react";
+import { CompactPicker } from "react-color";
+import Modal from "react-modal";
 
 class EditModal extends Component {
   constructor(props) {
@@ -10,19 +10,19 @@ class EditModal extends Component {
   }
 
   render() {
-    const { 
-      pickerVisible, 
-      modalIsOpenSub, 
-      controlModalSub, 
-      categories, 
-      handleChange, 
-      onSubmitSubCategory, 
-      onTogglePicker, 
-      handleColorChange, 
+    const {
+      pickerVisible,
+      modalIsOpenSub,
+      controlModalSub,
+      categories,
+      handleChange,
+      onSubmitSubCategory,
+      onTogglePicker,
+      handleColorChange,
       ColorChange,
       data
     } = this.props;
-    
+
     return (
       <Modal
         isOpen={modalIsOpenSub}
@@ -33,52 +33,64 @@ class EditModal extends Component {
       >
         <div className="modal" id="new-category">
           <form className="modal-content">
-            <input 
-            type="text" 
-            name="title" 
-            placeholder="Título da Sub-categoria" 
-            onChange={ handleChange }
-            value={ data.title ? data.title : null }
-          />
+            <input
+              type="text"
+              name="title"
+              placeholder="Título da Sub-categoria"
+              onChange={handleChange}
+              value={data.title ? data.title : ""}
+            />
 
-            <select name="category" onChange={ handleChange }>
-              {categories
-              ? categories.map((category, index )=> {
-                if (category._id === data._id) {
-                  return <option key={index} value={ category._id }>{ category.title }</option>;
-                }
-                return <option key={index} value={ category._id }>{ category.title }</option>;
-              })
-              : <option></option>}
+            <select name="category" onChange={handleChange}>
+              {categories ? (
+                categories.map((category, index) => {
+                  if (category._id === data._id) {
+                    return (
+                      <option key={index} value={category._id}>
+                        {category.title}
+                      </option>
+                    );
+                  }
+                  return (
+                    <option key={index} value={category._id}>
+                      {category.title}
+                    </option>
+                  );
+                })
+              ) : (
+                <option />
+              )}
             </select>
 
             <div className="content-container">
-              <textarea 
-                name="content" 
-                className="mde" 
-                placeholder="Conteúdo dessa categoria" 
-                onChange={ handleChange } 
-                value={ data.content ? data.content : null }
-              >
-              </textarea>
+              <textarea
+                name="content"
+                className="mde"
+                placeholder="Conteúdo dessa categoria"
+                onChange={handleChange}
+                value={data.content ? data.content : ""}
+              />
             </div>
             {/* eslint-disable-next-line */}
-            <a style={{ background: ColorChange, color: '#fff' }} onClick={ onTogglePicker }>
+            <a
+              style={{ background: ColorChange, color: "#fff" }}
+              onClick={onTogglePicker}
+            >
               Escolha uma cor
             </a>
 
-            { pickerVisible && (
-              <div style={{ position: 'absolute', bottom: '73px' }}>
+            {pickerVisible && (
+              <div style={{ position: "absolute", bottom: "73px" }}>
                 <CompactPicker
                   color="#333"
-                  onChangeComplete={ handleColorChange }
+                  onChangeComplete={handleColorChange}
                 />
               </div>
-            ) }
+            )}
 
-            <button onClick={ onSubmitSubCategory }>SALVAR SUBCATEGORIA</button>
+            <button onClick={onSubmitSubCategory}>SALVAR SUBCATEGORIA</button>
             {/* eslint-disable-next-line */}
-            <a onClick={(e) => controlModalSub(e)}>CANCELAR</a>
+            <a onClick={e => controlModalSub(e)}>CANCELAR</a>
           </form>
         </div>
       </Modal>
@@ -89,24 +101,24 @@ class EditModal extends Component {
 export default EditModal;
 
 const customStyles = {
-  content : {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    
-    width: '700px',
-    padding: '20px',
-    background: '#282A36',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    transition: 'ease .2s',
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+
+    width: "700px",
+    padding: "20px",
+    background: "#282A36",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    transition: "ease .2s"
   },
 
   overlay: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)'
-  },
+    backgroundColor: "rgba(255, 255, 255, 0.2)"
+  }
 };

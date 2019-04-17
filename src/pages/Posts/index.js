@@ -16,13 +16,14 @@ export default class Posts extends Component {
       modalIsOpen: false,
       subcategory: null,
       posts: [],
-      _id: null,
+      _id: "",
 
       pickerVisible: null,
       category: null,
-      title: null,
-      content: null,
-      color: null,
+      title: "",
+      titlePost: "",
+      content: "",
+      color: "",
       modalIsOpenSub: false,
 
       categories: null,

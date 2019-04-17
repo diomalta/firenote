@@ -1,12 +1,12 @@
-import React from 'react';
-import Modal from 'react-modal';
+import React from "react";
+import Modal from "react-modal";
 
-import ReactMde from 'react-mde';
+import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import "react-mde/lib/styles/css/react-mde-all.css";
 
 export class ModalAnotation extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -26,15 +26,21 @@ export class ModalAnotation extends React.Component {
     this.setState({ tab });
   };
 
-  handleValueChange = async (value) => {
+  handleValueChange = async value => {
     const { setContent } = this.props;
     await setContent(value);
     this.setState({ value });
   };
 
-  render () {
-    const {  modalIsOpen, controlModal, handleChange, onSubmit, post } = this.props;
-    
+  render() {
+    const {
+      modalIsOpen,
+      controlModal,
+      handleChange,
+      onSubmit,
+      post
+    } = this.props;
+
     return (
       <Modal
         isOpen={modalIsOpen}
@@ -45,12 +51,12 @@ export class ModalAnotation extends React.Component {
       >
         <div className="modal" id="new-Anotation">
           <form className="modal-content">
-            <input 
-              type="text" 
-              name="titlePost" 
-              placeholder="Título da anotação" 
-              onChange={handleChange} 
-              value={post ? post.title : null}
+            <input
+              type="text"
+              name="titlePost"
+              placeholder="Título da anotação"
+              onChange={handleChange}
+              value={post ? post.title : undefined}
             />
 
             <ReactMde
@@ -67,7 +73,7 @@ export class ModalAnotation extends React.Component {
 
             <button onClick={onSubmit}>SALVAR ANOTAÇÃO</button>
             {/* eslint-disable-next-line */}
-            <a onClick={(e) => controlModal(e)}>CANCELAR</a>
+            <a onClick={e => controlModal(e)}>CANCELAR</a>
           </form>
         </div>
       </Modal>
@@ -77,26 +83,25 @@ export class ModalAnotation extends React.Component {
 
 export default ModalAnotation;
 
-
 const customStyles = {
-  content : {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    
-    width: '800px',
-    padding: '20px',
-    background: '#282A36',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    transition: 'ease .2s',
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+
+    width: "800px",
+    padding: "20px",
+    background: "#282A36",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    transition: "ease .2s"
   },
 
   overlay: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)'
-  },
+    backgroundColor: "rgba(255, 255, 255, 0.2)"
+  }
 };
