@@ -50,22 +50,13 @@ class App extends Component {
       />
     );
 
-    const AuthRoute = ({ component: Component, ...rest }) => (
-      <Route
-        {...rest}
-        render={props =>
-          checkAuth() ? <Redirect to="/categories" /> : <Component {...props} />
-        }
-      />
-    );
-
     return (
       <Fragment>
         <Provider>
           <BrowserRouter>
             <Switch>
-              <AuthRoute path="/signin" name="Home" component={Login} />
-              <AuthRoute path="/signup" name="Home" component={Register} />
+              <Route path="/signin" name="Home" component={Login} />
+              <Route path="/signup" name="Home" component={Register} />
               <PrivateRoute path="/" name="Home" component={DefaultLayout} />
             </Switch>
           </BrowserRouter>

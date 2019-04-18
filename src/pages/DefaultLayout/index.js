@@ -1,19 +1,16 @@
-import React, { Component, Suspense } from "react";
+import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import { Container, Content } from "../../styles/components";
+import AsyncComponent from "../../components/AsyncComponent";
 
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 
-import Anotation from "../Anotation";
-import Categories from "../Categories";
-import Posts from "../Posts";
-
-import Loading from "../../components/Loading";
-
-const loading = () => <Loading />;
+const Categories = AsyncComponent(() => import("../Categories"));
+const Anotation = AsyncComponent(() => import("../Anotation"));
+const Posts = AsyncComponent(() => import("../Posts"));
 
 class DefaultLayout extends Component {
   render() {
@@ -24,17 +21,15 @@ class DefaultLayout extends Component {
 
         <Content>
           <Header />
-          <Suspense fallback={loading}>
-            <Switch>
-              <Route exact path="/categories" component={Categories} />
-              <Route
-                exact
-                path="/subcategories/:id/anotation/:id"
-                component={Anotation}
-              />
-              <Route exact path="/anotations/:id" component={Posts} />
-            </Switch>
-          </Suspense>
+          <Switch>
+            <Route exact path="/categories" component={Categories} />
+            <Route
+              exact
+              path="/subcategories/:id/anotation/:id"
+              component={Anotation}
+            />
+            <Route exact path="/anotations/:id" component={Posts} />
+          </Switch>
         </Content>
       </Container>
     );
