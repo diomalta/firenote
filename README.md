@@ -3,7 +3,7 @@
 Aplicativo feitos para anotações onde se organiza por categorias, subcategorias. Suporte para HTML e Markdown.
 
 <a href="https://github.com/DioHX" rel="nofollow" target="_blank">
-<img src="https://avatars2.githubusercontent.com/u/22456325?s=460&v=4" style="border-radius: 50%" width="300"><br /> 
+<img src="https://avatars2.githubusercontent.com/u/22456325?s=460&v=4" border-radius="50%" width="300"><br /> 
   DioHX: The developer
 </a>
 
