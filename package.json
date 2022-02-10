@@ -13,7 +13,7 @@
     "jsonwebtoken": "^8.5.0",
     "markdown-it": "^8.4.2",
     "mongoose": "^5.3.8",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "nprogress": "^0.2.0",
     "prop-types": "^15.6.1",
     "react": "^16.8.4",
