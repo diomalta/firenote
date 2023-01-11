@@ -10,7 +10,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.4",
     "highlight.js": "^9.15.6",
-    "jsonwebtoken": "^8.5.0",
+    "jsonwebtoken": "^9.0.0",
     "markdown-it": "^8.4.2",
     "mongoose": "^5.3.8",
     "node-sass": "^4.11.0",
